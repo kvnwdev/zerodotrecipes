@@ -5,6 +5,7 @@ import { type Complexity } from "@/types/recipe";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Suspense } from "react";
+import { ShareButton } from "./ShareButton";
 
 const complexityColors: Record<Complexity, string> = {
   easy: "bg-green-500/10 text-green-500",
@@ -52,6 +53,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
           >
             {recipe.complexity}
           </span>
+          <ShareButton />
         </div>
       </header>
 
