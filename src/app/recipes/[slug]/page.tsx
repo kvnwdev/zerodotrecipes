@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Suspense } from "react";
 import { ShareButton } from "./ShareButton";
+import { type Metadata } from "next";
 
 const complexityColors: Record<Complexity, string> = {
   easy: "bg-green-500/10 text-green-500",
@@ -17,6 +18,25 @@ interface RecipePageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateMetadata({
+  params,
+}: RecipePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const recipe = await getRecipeBySlug(slug);
+
+  if (!recipe) {
+    return {
+      title: "Recipe Not Found",
+      description: "The requested recipe could not be found.",
+    };
+  }
+
+  return {
+    title: `${recipe.title} | 0recipes`,
+    description: recipe.description || `Learn how to make ${recipe.title}`,
+  };
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {
