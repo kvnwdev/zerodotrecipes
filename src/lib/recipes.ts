@@ -48,6 +48,7 @@ export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
       content,
     };
   } catch (error) {
+    console.error(`Error fetching recipe for slug ${slug}:`, error);
     return null;
   }
 }
